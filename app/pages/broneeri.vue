@@ -170,6 +170,7 @@
 
 <script setup lang="ts">
 const { t, tm } = useI18n()
+const { packages } = useCatalogue()
 const route = useRoute()
 const localePath = useLocalePath()
 
@@ -189,8 +190,7 @@ const typeOptions = computed(() => [
 
 // Pre-planning packages, shared with the home and teenused pages
 const packageOptions = computed(() => [
-  ...(tm('teenused.prePlanning.packages') as Array<{ id: string; title: string; price: string }>)
-    .map(p => ({ value: p.id, label: `${p.title} — ${p.price}` })),
+  ...packages.value.map(p => ({ value: p.id, label: `${p.title} — ${p.price}` })),
   { value: 'undecided', label: t('broneeri.form.packageUndecided') },
 ])
 

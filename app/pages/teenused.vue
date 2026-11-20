@@ -113,7 +113,7 @@
                 i === 0 ? 'text-white' : 'text-stone-700',
               ]"
             >
-              {{ item.price }}
+              {{ item.priceFrom ? `${$t('teenused.pricing.fromLabel')} ${fromPrice(item.priceFrom)}` : item.price }}
             </p>
             <p v-if="item.priceNote" class="text-xs tracking-[0.15em] uppercase text-stone-400 mt-2">
               {{ item.priceNote }}
@@ -185,12 +185,14 @@
 
 <script setup lang="ts">
 const { t, tm } = useI18n()
+const { packages, fromPrice } = useCatalogue()
+const seoPrices = computed(() => ({ pre: fromPrice('pre_planning'), ceremony: fromPrice('ceremony') }))
 
 useSeoMeta({
   title: () => t('teenused.seo.title'),
-  description: () => t('teenused.seo.description'),
+  description: () => t('teenused.seo.description', seoPrices.value),
   ogTitle: () => t('teenused.seo.title'),
-  ogDescription: () => t('teenused.seo.description'),
+  ogDescription: () => t('teenused.seo.description', seoPrices.value),
   ogImage: 'https://tahistadeselu.ee/og-image.jpg',
 })
 
@@ -217,13 +219,14 @@ interface PricingItem {
   listLabel: string
   list: string[]
   showPackages?: boolean
+  // A portal price-list group: the card shows its cheapest item as "alates".
+  priceFrom?: 'pre_planning' | 'ceremony'
   notes?: string[]
   cta: string
 }
 
 const services = computed(() => tm('teenused.services.items') as ServiceItem[])
 const pricingItems = computed(() => tm('teenused.pricing.items') as PricingItem[])
-const packages = computed(() => tm('teenused.prePlanning.packages') as Array<{ id: string; title: string; price: string }>)
 
 const localePath = useLocalePath()
 

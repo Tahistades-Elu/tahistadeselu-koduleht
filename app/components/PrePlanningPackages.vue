@@ -66,17 +66,10 @@
 </template>
 
 <script setup lang="ts">
-export interface PrePlanningPackage {
-  id: string
-  title: string
-  price: string
-  fit: string
-  list: string[]
-}
-
+// Names, prices and contents come from the portal's price list
+// (useCatalogue); only the section's own headings live in the locales.
 const { tm } = useI18n()
 const localePath = useLocalePath()
-
-const packages = computed(() => tm('teenused.prePlanning.packages') as PrePlanningPackage[])
+const { packages } = useCatalogue()
 const sharedNotes = computed(() => tm('teenused.prePlanning.notes') as string[])
 </script>

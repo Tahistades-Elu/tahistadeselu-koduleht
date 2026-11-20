@@ -128,7 +128,7 @@ export default {
   teenused: {
     seo: {
       title: 'Teenused ja hinnad — Tähistades Elu',
-      description: 'Elu tähistamise tseremoonia eelplaneerimine alates 49 €, tseremoonia korraldamine alates 800 €. Esmane kohtumine (kuni 45 min) on tasuta.',
+      description: 'Elu tähistamise tseremoonia eelplaneerimine alates {pre}, tseremoonia korraldamine alates {ceremony}. Esmane kohtumine (kuni 45 min) on tasuta.',
     },
     eyebrow: 'Teenused',
     title: 'Iga elu väärib\noma lugu',
@@ -179,42 +179,8 @@ export default {
       subtitle: 'Kolm paketti',
       listLabel: 'Pakett sisaldab:',
       cta: 'Vali pakett',
-      packages: [
-        {
-          id: 'self',
-          title: 'Iseseisev eelplaneerimine',
-          price: '49 €',
-          fit: 'Sobib Sulle, kui soovid oma mõtted privaatselt kirja panna.',
-          list: [
-            'piiramatu ligipääs iseteenindusele',
-          ],
-        },
-        {
-          id: 'supported',
-          title: 'Toetatud eelplaneerimine',
-          price: '179 €',
-          fit: 'Sobib Sulle, kui soovid enda mõtteid meiega arutada või vajad lihtsalt toetavat vestlust.',
-          list: [
-            'piiramatu ligipääs iseteenindusele',
-            '1,5-tunnine vestlus',
-            'vestluse käigus abi iseteeninduse täitmisel',
-          ],
-        },
-        {
-          id: 'personal',
-          title: 'Personaalne eelplaneerimine',
-          price: '450 €',
-          fit: 'Sobib Sulle, kui soovid meiega oma mõtteid ja ideid arutada ning vajad toetavat vestlust. Pakett hõlmab põhjalikumat personaalset lähenemist.',
-          list: [
-            'piiramatu ligipääs iseteenindusele',
-            '3-tunnine personaalne nõustamine',
-            'soovide põhjalik läbimõtlemine',
-            'soovi korral lähedaste kaasamine',
-            'vajadusel abi kogu info sisestamisel iseteenindusse',
-            'nõustamine muudes korraldusega seotud praktilistes küsimustes',
-          ],
-        },
-      ],
+      // The packages themselves (names, prices, contents) come from the
+      // portal's price list — see app/composables/useCatalogue.ts.
       notes: [
         'Iseteeninduses saad igal ajal infot juurde lisada, kustutada või muuta.',
         'Sinu surma korral võtab märgitud kontaktisik meiega ühendust ning saadame talle kogu Sinu poolt kirja pandud informatsiooni.',
@@ -222,6 +188,7 @@ export default {
     },
     pricing: {
       label: 'Hinnastamine',
+      fromLabel: 'Alates',
       intro: 'Iga elu tähistamise tseremoonia on personaalne. Seetõttu koostatakse lõplik hinnapakkumine vastavalt kliendi soovidele ja valitud lahendustele. Kõik hinnad sisaldavad personaalset lähenemist ning põhjalikku ettevalmistust.',
       items: [
         {
@@ -241,7 +208,7 @@ export default {
         },
         {
           title: 'Enda elu tähistamise tseremoonia eelplaneerimine',
-          price: 'Alates 49 €',
+          priceFrom: 'pre_planning',
           priceNote: '',
           description: 'Kolm paketti — vali endale sobiv.',
           listLabel: 'Paketid:',
@@ -256,7 +223,7 @@ export default {
         },
         {
           title: 'Elu tähistamise tseremoonia korraldamine',
-          price: 'Alates 800 €',
+          priceFrom: 'ceremony',
           priceNote: '',
           description: '',
           listLabel: 'Lõplik hind sõltub:',
@@ -300,7 +267,6 @@ export default {
       'Kirjutusruumi ja fotokohad',
       'Eesti keeles',
     ],
-    price: '€ 35',
     buyBtn: 'Telli päevik',
     buyNote: 'Saadaval veebis ja raamatupoodides. Telli meilt otse.',
     orderLabel: 'Telli',

@@ -251,6 +251,7 @@
 
 <script setup lang="ts">
 const { t, tm } = useI18n()
+const { fromPrice } = useCatalogue()
 const localePath = useLocalePath()
 const { app: { baseURL } } = useRuntimeConfig()
 const v = (file: string) => `${baseURL}video/${file}`
@@ -311,7 +312,11 @@ const steps = computed(() => tm('home.steps') as Array<{ num: string; title: str
 
 // Pricing teasers (section 5) — pulls from the teenused pricing keys
 const pricingTeasers = computed(() =>
-  (tm('teenused.pricing.items') as Array<{ title: string; price: string; priceNote?: string }>)
-    .map(item => ({ title: item.title, price: item.price, priceNote: item.priceNote })),
+  (tm('teenused.pricing.items') as Array<{ title: string; price?: string; priceFrom?: 'pre_planning' | 'ceremony'; priceNote?: string }>)
+    .map(item => ({
+      title: item.title,
+      price: item.priceFrom ? `${t('teenused.pricing.fromLabel')} ${fromPrice(item.priceFrom)}` : item.price,
+      priceNote: item.priceNote,
+    })),
 )
 </script>

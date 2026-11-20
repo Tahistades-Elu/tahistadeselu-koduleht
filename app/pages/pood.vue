@@ -80,7 +80,7 @@
         <!-- Price -->
         <div class="flex flex-col justify-between">
           <div>
-            <p class="text-4xl font-extralight text-stone-800 tracking-wide">{{ $t('pood.price') }}</p>
+            <p class="text-4xl font-extralight text-stone-800 tracking-wide">{{ workbook?.price }}</p>
           </div>
           <div class="mt-10">
             <a
@@ -184,6 +184,9 @@ definePageMeta({
 
 const { t, tm } = useI18n()
 const localePath = useLocalePath()
+// The price is the portal price list's, like every price on the site.
+const { shopItems } = useCatalogue()
+const workbook = computed(() => shopItems.value.find(i => i.code === 'workbook'))
 
 useSeoMeta({
   title: () => t('pood.seo.title'),

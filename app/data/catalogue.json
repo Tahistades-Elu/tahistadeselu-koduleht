@@ -1,0 +1,131 @@
+{
+  "currency": "EUR",
+  "groups": {
+    "pre_planning": {
+      "fromCents": 4900,
+      "items": [
+        {
+          "code": "basic",
+          "priceCents": 4900,
+          "requiresShipping": false,
+          "name": {
+            "et": "Iseseisev eelplaneerimine",
+            "en": "Independent pre-planning"
+          },
+          "description": {
+            "et": "Sobib Sulle, kui soovid oma mõtted privaatselt kirja panna.",
+            "en": "Right for you if you would like to write down your thoughts privately."
+          },
+          "features": {
+            "et": [
+              "piiramatu ligipääs iseteenindusele"
+            ],
+            "en": [
+              "unlimited access to the self-service portal"
+            ]
+          }
+        },
+        {
+          "code": "standard",
+          "priceCents": 17900,
+          "requiresShipping": false,
+          "name": {
+            "et": "Toetatud eelplaneerimine",
+            "en": "Supported pre-planning"
+          },
+          "description": {
+            "et": "Sobib Sulle, kui soovid enda mõtteid meiega arutada või vajad lihtsalt toetavat vestlust.",
+            "en": "Right for you if you would like to talk your thoughts through with us, or simply need a supportive conversation."
+          },
+          "features": {
+            "et": [
+              "piiramatu ligipääs iseteenindusele",
+              "1,5-tunnine vestlus",
+              "vestluse käigus abi iseteeninduse täitmisel"
+            ],
+            "en": [
+              "unlimited access to the self-service portal",
+              "a 1.5-hour conversation",
+              "help filling in the self-service portal during the conversation"
+            ]
+          }
+        },
+        {
+          "code": "full",
+          "priceCents": 45000,
+          "requiresShipping": false,
+          "name": {
+            "et": "Personaalne eelplaneerimine",
+            "en": "Personal pre-planning"
+          },
+          "description": {
+            "et": "Sobib Sulle, kui soovid meiega oma mõtteid ja ideid arutada ning vajad toetavat vestlust. Pakett hõlmab põhjalikumat personaalset lähenemist.",
+            "en": "Right for you if you would like to discuss your thoughts and ideas with us and need a supportive conversation. The package takes a more thorough, personal approach."
+          },
+          "features": {
+            "et": [
+              "piiramatu ligipääs iseteenindusele",
+              "3-tunnine personaalne nõustamine",
+              "soovide põhjalik läbimõtlemine",
+              "soovi korral lähedaste kaasamine",
+              "vajadusel abi kogu info sisestamisel iseteenindusse",
+              "nõustamine muudes korraldusega seotud praktilistes küsimustes"
+            ],
+            "en": [
+              "unlimited access to the self-service portal",
+              "3 hours of personal guidance",
+              "thinking your wishes through in depth",
+              "involving your loved ones, if you wish",
+              "help entering all the information into the self-service portal, if needed",
+              "advice on other practical arrangements"
+            ]
+          }
+        }
+      ]
+    },
+    "ceremony": {
+      "fromCents": 80000,
+      "items": [
+        {
+          "code": "tseremoonia",
+          "priceCents": 80000,
+          "requiresShipping": false,
+          "name": {
+            "et": "Elu tähistamise tseremoonia korraldamine",
+            "en": "Organising a celebration-of-life ceremony"
+          },
+          "description": {
+            "et": "",
+            "en": ""
+          },
+          "features": {
+            "et": [],
+            "en": []
+          }
+        }
+      ]
+    },
+    "shop": {
+      "fromCents": 3500,
+      "items": [
+        {
+          "code": "workbook",
+          "priceCents": 3500,
+          "requiresShipping": true,
+          "name": {
+            "et": "Päevik „Minu Lugu\"",
+            "en": "Workbook \"My Story\""
+          },
+          "description": {
+            "et": "Isiklik päevik oma elu, soovide ja kirjade jäädvustamiseks — neile, kes jäävad.",
+            "en": "A personal journal for capturing your life, wishes, and letters — for those who remain."
+          },
+          "features": {
+            "et": [],
+            "en": []
+          }
+        }
+      ]
+    }
+  }
+}

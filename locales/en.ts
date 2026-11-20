@@ -128,7 +128,7 @@ export default {
   teenused: {
     seo: {
       title: 'Services & Pricing — Tähistades Elu',
-      description: 'Pre-planning a celebration-of-life ceremony from €49, organising a ceremony from €800. The first meeting (up to 45 min) is free.',
+      description: 'Pre-planning a celebration-of-life ceremony from {pre}, organising a ceremony from {ceremony}. The first meeting (up to 45 min) is free.',
     },
     eyebrow: 'Services',
     title: 'Every life deserves\nits own story',
@@ -179,42 +179,8 @@ export default {
       subtitle: 'Three packages',
       listLabel: 'The package includes:',
       cta: 'Choose package',
-      packages: [
-        {
-          id: 'self',
-          title: 'Independent pre-planning',
-          price: '€49',
-          fit: 'Right for you if you would like to write down your thoughts privately.',
-          list: [
-            'unlimited access to the self-service portal',
-          ],
-        },
-        {
-          id: 'supported',
-          title: 'Supported pre-planning',
-          price: '€179',
-          fit: 'Right for you if you would like to talk your thoughts through with us, or simply need a supportive conversation.',
-          list: [
-            'unlimited access to the self-service portal',
-            'a 1.5-hour conversation',
-            'help filling in the self-service portal during the conversation',
-          ],
-        },
-        {
-          id: 'personal',
-          title: 'Personal pre-planning',
-          price: '€450',
-          fit: 'Right for you if you would like to discuss your thoughts and ideas with us and need a supportive conversation. The package takes a more thorough, personal approach.',
-          list: [
-            'unlimited access to the self-service portal',
-            '3 hours of personal guidance',
-            'thinking your wishes through in depth',
-            'involving your loved ones, if you wish',
-            'help entering all the information into the self-service portal, if needed',
-            'advice on other practical arrangements',
-          ],
-        },
-      ],
+      // The packages themselves (names, prices, contents) come from the
+      // portal's price list — see app/composables/useCatalogue.ts.
       notes: [
         'In the self-service portal you can add, delete or change information at any time.',
         'In the event of your death, your chosen contact person gets in touch with us and we send them everything you have written down.',
@@ -222,6 +188,7 @@ export default {
     },
     pricing: {
       label: 'Pricing',
+      fromLabel: 'From',
       intro: 'Every celebration-of-life ceremony is personal. That is why the final quote is prepared according to the client\'s wishes and chosen solutions. All prices include a personal approach and thorough preparation.',
       items: [
         {
@@ -241,7 +208,7 @@ export default {
         },
         {
           title: 'Pre-planning your own celebration-of-life ceremony',
-          price: 'From €49',
+          priceFrom: 'pre_planning',
           priceNote: '',
           description: 'Three packages — choose the one that suits you.',
           listLabel: 'Packages:',
@@ -256,7 +223,7 @@ export default {
         },
         {
           title: 'Organising a celebration-of-life ceremony',
-          price: 'From €800',
+          priceFrom: 'ceremony',
           priceNote: '',
           description: '',
           listLabel: 'The final price depends on:',
@@ -300,7 +267,6 @@ export default {
       'Writing space and photo pages',
       'Available in Estonian and English',
     ],
-    price: '€ 35',
     buyBtn: 'Order workbook',
     buyNote: 'Available online and in bookshops. Order directly from us.',
     orderLabel: 'Order',
