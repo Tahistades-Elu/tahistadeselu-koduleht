@@ -30,6 +30,11 @@ jobs:
       - run: npm run generate
         env:
           VITE_APPS_SCRIPT_URL: ${{ vars.APPS_SCRIPT_URL }}
+          # The portal's public price feed (https://iseteenindus.tahistadeselu.ee/api/public/catalogue).
+          # Set as a repo variable once production serves it; while it is empty the
+          # committed snapshot in app/data/catalogue.json is used. When set, a feed that
+          # fails or looks wrong fails the build, and the live site stays as it was.
+          PORTAL_CATALOGUE_URL: ${{ vars.PORTAL_CATALOGUE_URL }}
 
       - run: cp dist/index.html dist/404.html
 
