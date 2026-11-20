@@ -4,7 +4,9 @@ The public website for **Tähistades Elu (LSCANDLES OÜ)**, an Estonian company
 arranging celebration-of-life ceremonies. Static Nuxt site, built in GitHub Actions
 and served from GitHub Pages at **tahistadeselu.ee**.
 
-Repo `wargunnerguy/tahistadeselu` — **public**. Nothing secret belongs in it.
+Repo `Tahistades-Elu/tahistadeselu-koduleht` — **public**. Nothing secret belongs in it.
+Cloned in WSL at `~/projects/tahistadeselu-koduleht`. (Moved from
+`wargunnerguy/tahistadeselu` on 2026-11-20; GitHub redirects the old name.)
 
 ## Scope
 
@@ -70,7 +72,7 @@ Eventually these forms move to the portal's `/api/public/booking` and
 
 ## Deploy
 
-Push to `master` → `.github/workflows/deploy.yml` runs `npm run generate`, copies
+Push to `main` → `.github/workflows/deploy.yml` runs `npm run generate`, copies
 `dist/index.html` to `dist/404.html` (so client-side routes survive a refresh on
 Pages), and publishes to GitHub Pages. There is no manual deploy step.
 
@@ -85,5 +87,10 @@ Managed at Veebimajutus.ee. The site is the four A records at
 
 ## Working style
 
-Give exact PowerShell commands one step at a time, and wait for the output before
-moving on. Where a result determines the next step, say what to look for.
+Development happens in WSL2 (Ubuntu 24.04, bash), usually from a Claude Code session
+started in the portal folder, which has this folder added as a working directory.
+Run locally with `npm run dev -- --port 3002` (the portal's dev server uses 3000).
+
+Branches: `main` is live (tahistadeselu.ee). `staging` will publish to
+`koduleht-test.tahistadeselu.ee` once that is set up — same naming as the portal
+(`iseteenindus` / `iseteenindus-test`).
