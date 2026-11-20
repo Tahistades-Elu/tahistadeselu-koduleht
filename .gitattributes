@@ -1,0 +1,28 @@
+# Normalise all text files to LF in the repo and in working copies
+* text=auto eol=lf
+
+# Images
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.avif binary
+*.ico  binary
+
+# Fonts
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+
+# Video / audio
+*.mp4  binary
+*.webm binary
+*.mov  binary
+*.mp3  binary
+
+# Documents
+*.pdf  binary
+*.docx binary
