@@ -16,6 +16,9 @@ concurrency:
 
 jobs:
   build:
+    # Only main is the live site. A manual run (or the portal's "publish"
+    # button) started on any other branch must never reach GitHub Pages.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

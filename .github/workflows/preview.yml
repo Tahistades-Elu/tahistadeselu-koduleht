@@ -1,0 +1,44 @@
+name: Build preview (staging)
+
+# Builds the staging branch against the TEST portal's price feed, so a broken
+# feed or a broken page shows up here before anything reaches main. Never
+# deploys to GitHub Pages (that is deploy.yml, main only). The built site is
+# kept as a downloadable artifact for koduleht-test.tahistadeselu.ee.
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm install
+
+      - run: npm run generate
+        env:
+          PORTAL_CATALOGUE_URL: https://iseteenindus-test.tahistadeselu.ee/api/public/catalogue
+
+      - run: cp dist/index.html dist/404.html
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: koduleht-preview
+          path: dist
+          retention-days: 7
