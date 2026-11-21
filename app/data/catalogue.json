@@ -127,5 +127,9 @@
         }
       ]
     }
+  },
+  "shop": {
+    "open": false,
+    "checkoutUrl": null
   }
 }

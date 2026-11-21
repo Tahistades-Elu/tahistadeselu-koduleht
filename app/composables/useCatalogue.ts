@@ -35,6 +35,8 @@ export function formatPrice(cents: number, lang: Lang): string {
   return lang === 'et' ? `${value.replace('.', ',')}\u00A0€` : `€${value}`
 }
 
+interface ShopFlag { open: boolean; checkoutUrl: string | null }
+
 export function useCatalogue() {
   const { locale } = useI18n()
   const lang = computed<Lang>(() => (locale.value === 'en' ? 'en' : 'et'))
@@ -61,5 +63,19 @@ export function useCatalogue() {
     return cents === null || cents === undefined ? '' : formatPrice(cents, lang.value)
   }
 
-  return { packages, shopItems, fromPrice, lang }
+  // The portal's checkout, once the shop is open (payments set up and terms
+  // written). Decided when the site is built; while closed, the buy buttons
+  // keep leading to the booking form and /pood stays hidden.
+  const shop = ((catalogue as { shop?: ShopFlag }).shop ?? { open: false, checkoutUrl: null }) as ShopFlag
+  const shopOpen = shop.open && !!shop.checkoutUrl
+
+  /** Absolute link into the checkout with one thing preselected, or null while the shop is closed. */
+  function checkoutHref(what: { pakett: string } | { toode: string }): string | null {
+    if (!shopOpen) return null
+    const q = new URLSearchParams(what as Record<string, string>)
+    if (lang.value === 'en') q.set('lang', 'en')
+    return `${shop.checkoutUrl}?${q.toString()}`
+  }
+
+  return { packages, shopItems, fromPrice, lang, shopOpen, checkoutHref }
 }

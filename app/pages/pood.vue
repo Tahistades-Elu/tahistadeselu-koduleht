@@ -13,6 +13,32 @@
       </div>
     </section>
 
+    <!-- Everything for sale, from the portal's price list (group "Pood") -->
+    <section class="py-24 px-6 bg-white">
+      <div class="max-w-5xl mx-auto">
+        <p class="text-xs tracking-[0.3em] uppercase text-stone-400 mb-16 text-center">{{ $t('pood.gridLabel') }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            v-for="item in shopItems"
+            :key="item.code"
+            class="flex flex-col p-10 bg-white border border-stone-200 hover:border-stone-400 hover:shadow-xl transition-all duration-300"
+          >
+            <h2 class="text-base tracking-[0.1em] uppercase font-light text-stone-800 mb-5">{{ item.title }}</h2>
+            <p class="text-3xl font-extralight tracking-wide text-stone-700">{{ item.price }}</p>
+            <p v-if="item.description" class="font-light text-sm leading-relaxed mt-6 text-stone-500 flex-1">{{ item.description }}</p>
+            <a
+              :href="checkoutHref({ toode: item.code })!"
+              class="mt-10 text-center text-xs tracking-[0.25em] uppercase px-6 py-4 border border-stone-800 text-stone-800 hover:bg-stone-800 hover:text-white transition-all duration-300"
+            >
+              {{ $t('pood.orderBtn') }}
+            </a>
+          </div>
+        </div>
+        <p class="mt-10 text-center text-xs text-stone-400 font-light">{{ $t('pood.checkoutNote') }}</p>
+      </div>
+    </section>
+
+    <template v-if="workbook">
     <!-- What is it -->
     <section class="py-24 px-6 bg-white">
       <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
@@ -84,7 +110,7 @@
           </div>
           <div class="mt-10">
             <a
-              href="#telli"
+              :href="checkoutHref({ toode: workbook.code })!"
               class="inline-block border border-stone-800 text-stone-800 text-xs tracking-[0.25em] uppercase px-8 py-3 hover:bg-stone-800 hover:text-white transition-all duration-300"
             >
               {{ $t('pood.buyBtn') }}
@@ -96,96 +122,18 @@
       </div>
     </section>
 
-    <!-- Order form -->
-    <section id="telli" class="py-24 px-6 bg-stone-50">
-      <div class="max-w-xl mx-auto">
-        <p class="text-xs tracking-[0.35em] uppercase text-stone-400 mb-4 text-center">{{ $t('pood.orderLabel') }}</p>
-        <h2 class="text-3xl md:text-4xl font-extralight text-stone-800 tracking-wide uppercase mb-4 text-center">
-          {{ $t('pood.orderTitle') }}
-        </h2>
-        <p class="text-stone-500 font-light text-sm text-center mb-16">{{ $t('pood.orderSubtitle') }}</p>
-
-        <!-- Success -->
-        <div v-if="status === 'success'" class="text-center py-10">
-          <p class="text-xs tracking-[0.3em] uppercase text-stone-400 mb-4">{{ $t('pood.form.successEyebrow') }}</p>
-          <h3 class="text-xl font-extralight text-stone-700 mb-4 tracking-wide">{{ $t('pood.form.successTitle') }}</h3>
-          <p class="text-stone-500 font-light text-sm">{{ $t('pood.form.successBody') }}</p>
-        </div>
-
-        <form v-else class="space-y-10" @submit.prevent="submit">
-          <!-- Honeypot: invisible to humans, bots fill it -->
-          <div class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
-            <label>Website<input v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" /></label>
-          </div>
-
-          <div>
-            <label class="block text-xs tracking-[0.2em] uppercase text-stone-400 mb-3">{{ $t('pood.form.name') }}</label>
-            <input
-              v-model="form.nimi"
-              type="text"
-              required
-              :placeholder="$t('pood.form.namePlaceholder')"
-              class="w-full border-b border-stone-200 bg-transparent py-3 text-stone-800 placeholder-stone-300 focus:outline-none focus:border-stone-600 transition-colors text-sm"
-            />
-          </div>
-
-          <div>
-            <label class="block text-xs tracking-[0.2em] uppercase text-stone-400 mb-3">{{ $t('pood.form.email') }}</label>
-            <input
-              v-model="form.epost"
-              type="email"
-              required
-              :placeholder="$t('pood.form.emailPlaceholder')"
-              class="w-full border-b border-stone-200 bg-transparent py-3 text-stone-800 placeholder-stone-300 focus:outline-none focus:border-stone-600 transition-colors text-sm"
-            />
-          </div>
-
-          <div>
-            <label class="block text-xs tracking-[0.2em] uppercase text-stone-400 mb-3">{{ $t('pood.form.qty') }}</label>
-            <select
-              v-model="form.kogus"
-              class="w-full border-b border-stone-200 bg-transparent py-3 text-stone-800 focus:outline-none focus:border-stone-600 transition-colors text-sm"
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-
-          <p v-if="status === 'error'" class="text-red-400 text-xs tracking-wide">
-            {{ $t('pood.form.error') }}
-          </p>
-
-          <button
-            type="submit"
-            :disabled="status === 'sending'"
-            class="w-full border border-stone-800 text-stone-800 text-xs tracking-[0.25em] uppercase py-4 hover:bg-stone-800 hover:text-white transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            {{ status === 'sending' ? $t('pood.form.sending') : $t('pood.form.submit') }}
-          </button>
-
-          <p class="text-center text-xs text-stone-400 font-light">
-            {{ $t('privacy.formNote') }}
-            <NuxtLink :to="localePath('/privaatsus')" class="underline underline-offset-2 hover:text-stone-600 transition-colors">{{ $t('privacy.formNoteLink') }}</NuxtLink>.
-          </p>
-        </form>
-      </div>
-    </section>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-// Store hidden until the workbook launches — send direct visitors home for now
-definePageMeta({
-  middleware: [(to) => navigateTo(to.path.startsWith('/en') ? '/en' : '/', { redirectCode: 302 })],
-})
+// Hidden until the portal's shop is open; ordering and paying happen in the
+// portal's checkout (one way to order, prices set on the server).
+definePageMeta({ middleware: 'shop-open' })
 
 const { t, tm } = useI18n()
-const localePath = useLocalePath()
 // The price is the portal price list's, like every price on the site.
-const { shopItems } = useCatalogue()
+const { shopItems, checkoutHref } = useCatalogue()
 const workbook = computed(() => shopItems.value.find(i => i.code === 'workbook'))
 
 useSeoMeta({
@@ -202,33 +150,4 @@ const titleLine2 = computed(() => titleRaw.value.split('\n')[1] ?? '')
 
 const chapters = computed(() => tm('pood.chapters') as Array<{ title: string; desc: string }>)
 const specs = computed(() => tm('pood.specs') as string[])
-
-const form = reactive({ nimi: '', epost: '', kogus: '1', website: '' })
-const status = ref<'idle' | 'sending' | 'success' | 'error'>('idle')
-
-async function submit() {
-  // Honeypot filled → bot; pretend success without sending
-  if (form.website) {
-    status.value = 'success'
-    return
-  }
-  const url = import.meta.env.VITE_APPS_SCRIPT_URL
-  if (!url || url === 'your_url_here') {
-    status.value = 'error'
-    return
-  }
-  status.value = 'sending'
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ type: 'paeviku-tellimus', ...form }),
-    })
-    const json = await res.json()
-    if (!json.success) throw new Error(json.error || 'server error')
-    status.value = 'success'
-  } catch {
-    status.value = 'error'
-  }
-}
 </script>

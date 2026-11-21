@@ -44,6 +44,15 @@ export function validate(body) {
       if (!item.features || !isTexts(item.features.et) || !isTexts(item.features.en)) return `${item.code}: bad features`
     }
   }
+  // Whether buy buttons lead to the portal's checkout. Optional (older
+  // portals and the first snapshot have none = closed). Open needs an https
+  // address, so a misconfigured portal can never point buyers at plain http.
+  if (body.shop !== undefined) {
+    const { open, checkoutUrl } = body.shop ?? {}
+    if (typeof open !== 'boolean') return 'bad shop flag'
+    if (open && !(isText(checkoutUrl) && /^https:\/\/[^/]+\/tellimus$/.test(checkoutUrl))) return 'shop open without an https checkout address'
+    if (!open && checkoutUrl !== null) return 'shop closed but has a checkout address'
+  }
   // The site has a packages section and two "from" prices; an empty group
   // there means the price list lost something, not that it should vanish.
   if (!body.groups.pre_planning.items.length) return 'no pre-planning packages'

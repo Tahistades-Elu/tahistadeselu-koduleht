@@ -80,11 +80,12 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
 
+// The shop appears once the portal's checkout is open (see useCatalogue).
+const { shopOpen } = useCatalogue()
 const links = [
   { to: '/meist', key: 'nav.meist' },
   { to: '/teenused', key: 'nav.teenused' },
-  // Store hidden until the workbook launches — restore this link then
-  // { to: '/pood', key: 'nav.pood' },
+  ...(shopOpen ? [{ to: '/pood', key: 'nav.pood' }] : []),
   { to: '/broneeri', key: 'nav.broneeri' },
   { to: '/kontakt', key: 'nav.kontakt' },
 ]

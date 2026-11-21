@@ -179,6 +179,8 @@ export default {
       subtitle: 'Three packages',
       listLabel: 'The package includes:',
       cta: 'Choose package',
+      ctaOrder: 'Order package',
+      ctaAskFirst: 'Or book a free meeting first',
       // The packages themselves (names, prices, contents) come from the
       // portal's price list — see app/composables/useCatalogue.ts.
       notes: [
@@ -269,22 +271,9 @@ export default {
     ],
     buyBtn: 'Order workbook',
     buyNote: 'Available online and in bookshops. Order directly from us.',
-    orderLabel: 'Order',
-    orderTitle: 'Order a workbook',
-    orderSubtitle: "Fill in the form and we'll be in touch.",
-    form: {
-      name: 'Name *',
-      namePlaceholder: 'Your name',
-      email: 'Email *',
-      emailPlaceholder: "you{'@'}email.com",
-      qty: 'Quantity',
-      submit: 'Send order',
-      sending: 'Sending...',
-      successEyebrow: 'Sent',
-      successTitle: 'Order received!',
-      successBody: "We'll be in touch as soon as possible.",
-      error: 'Something went wrong. Please try again.',
-    },
+    gridLabel: 'Products',
+    orderBtn: 'Order',
+    checkoutNote: 'Payment and delivery to a parcel machine are completed securely in our self-service portal.',
   },
   broneeri: {
     seo: {

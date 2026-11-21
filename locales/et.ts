@@ -179,6 +179,8 @@ export default {
       subtitle: 'Kolm paketti',
       listLabel: 'Pakett sisaldab:',
       cta: 'Vali pakett',
+      ctaOrder: 'Telli pakett',
+      ctaAskFirst: 'Või broneeri enne tasuta kohtumine',
       // The packages themselves (names, prices, contents) come from the
       // portal's price list — see app/composables/useCatalogue.ts.
       notes: [
@@ -269,22 +271,9 @@ export default {
     ],
     buyBtn: 'Telli päevik',
     buyNote: 'Saadaval veebis ja raamatupoodides. Telli meilt otse.',
-    orderLabel: 'Telli',
-    orderTitle: 'Päeviku tellimine',
-    orderSubtitle: 'Täitke vorm ja võtame teiega ühendust.',
-    form: {
-      name: 'Nimi *',
-      namePlaceholder: 'Teie nimi',
-      email: 'E-post *',
-      emailPlaceholder: "teie{'@'}email.ee",
-      qty: 'Kogus',
-      submit: 'Saada tellimus',
-      sending: 'Saatmine...',
-      successEyebrow: 'Saadetud',
-      successTitle: 'Tellimus vastu võetud!',
-      successBody: 'Võtame teiega ühendust esimesel võimalusel.',
-      error: 'Midagi läks valesti. Proovige uuesti.',
-    },
+    gridLabel: 'Tooted',
+    orderBtn: 'Telli',
+    checkoutNote: 'Makse ja tarne pakiautomaati vormistatakse turvaliselt meie iseteeninduses.',
   },
   broneeri: {
     seo: {
