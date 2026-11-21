@@ -1,0 +1,45 @@
+name: Uptime
+
+# An outside view of whether the sites are up. The portal's own watchdog runs
+# on the same machine, so it cannot report that machine being off, out of
+# disk or unreachable; this can. It lives in this public repo because public
+# repos get Actions minutes free, and checking every 15 minutes from the
+# private portal repo would eat its monthly allowance.
+#
+# A failed run is the alarm: GitHub emails whoever last changed the schedule
+# below. Scheduled workflows run only from the default branch (main), and
+# GitHub pauses them in a public repo after 60 days without a commit — it
+# emails a warning first; one click re-enables.
+#
+# What is checked is already public: the two addresses and the portal's
+# /healthz, which says only {"status":"ok","db":"ok"}.
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Portal (iseteenindus) answers and its database is reachable
+        run: |
+          # Two tries a minute apart, so one dropped packet is not an alarm.
+          for i in 1 2; do
+            body=$(curl -fsS --max-time 20 https://iseteenindus.tahistadeselu.ee/healthz) && \
+              echo "$body" | grep -q '"db":"ok"' && { echo "ok: $body"; exit 0; }
+            echo "try $i failed: ${body:-no answer}"; sleep 60
+          done
+          echo "::error::iseteenindus.tahistadeselu.ee/healthz is failing"; exit 1
+
+      - name: Website (tahistadeselu.ee) answers
+        run: |
+          for i in 1 2; do
+            curl -fsS --max-time 20 -o /dev/null https://tahistadeselu.ee/ && { echo ok; exit 0; }
+            echo "try $i failed"; sleep 60
+          done
+          echo "::error::tahistadeselu.ee is not answering"; exit 1
