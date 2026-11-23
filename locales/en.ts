@@ -179,8 +179,10 @@ export default {
       subtitle: 'Three packages',
       listLabel: 'The package includes:',
       cta: 'Choose package',
-      ctaOrder: 'Order package',
-      ctaAskFirst: 'Or book a free meeting first',
+      ctaOrder: 'Order and start now',
+      ctaAskFirst: 'Or book a free introductory call first',
+      ctaCall: 'Book a free introductory call',
+      ctaCallNote: 'We talk it through first. You only pay once you decide to go ahead.',
       // The packages themselves (names, prices, contents) come from the
       // portal's price list — see app/composables/useCatalogue.ts.
       notes: [

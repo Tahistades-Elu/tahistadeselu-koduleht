@@ -52,6 +52,15 @@ export function validate(body) {
     if (typeof open !== 'boolean') return 'bad shop flag'
     if (open && !(isText(checkoutUrl) && /^https:\/\/[^/]+\/tellimus$/.test(checkoutUrl))) return 'shop open without an https checkout address'
     if (!open && checkoutUrl !== null) return 'shop closed but has a checkout address'
+    // The "book a free introductory call" form (2026-11-23). Optional; when
+    // present it must be the portal's https /broneeri, nothing else.
+    const { requestUrl } = body.shop ?? {}
+    if (requestUrl !== undefined && requestUrl !== null && !(isText(requestUrl) && /^https:\/\/[^/]+\/broneeri$/.test(requestUrl))) {
+      return 'request form address is not an https /broneeri'
+    }
+  }
+  for (const item of body.groups.pre_planning.items) {
+    if (item.orderOnline !== undefined && typeof item.orderOnline !== 'boolean') return `${item.code}: bad orderOnline`
   }
   // The site has a packages section and two "from" prices; an empty group
   // there means the price list lost something, not that it should vanish.

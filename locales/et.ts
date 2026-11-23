@@ -179,8 +179,10 @@ export default {
       subtitle: 'Kolm paketti',
       listLabel: 'Pakett sisaldab:',
       cta: 'Vali pakett',
-      ctaOrder: 'Telli pakett',
-      ctaAskFirst: 'Või broneeri enne tasuta kohtumine',
+      ctaOrder: 'Telli ja alusta kohe',
+      ctaAskFirst: 'Või broneeri enne tasuta tutvumiskõne',
+      ctaCall: 'Broneeri tasuta tutvumiskõne',
+      ctaCallNote: 'Räägime enne läbi, mida soovid. Maksad alles siis, kui otsustad jätkata.',
       // The packages themselves (names, prices, contents) come from the
       // portal's price list — see app/composables/useCatalogue.ts.
       notes: [

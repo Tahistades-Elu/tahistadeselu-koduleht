@@ -44,6 +44,7 @@
           </li>
         </ul>
 
+        <!-- Bought online and started straight away (the smallest package). -->
         <template v-if="checkoutHref({ pakett: pkg.code })">
           <a
             :href="checkoutHref({ pakett: pkg.code })!"
@@ -51,12 +52,24 @@
           >
             {{ $t('teenused.prePlanning.ctaOrder') }}
           </a>
-          <NuxtLink
-            :to="{ path: localePath('/broneeri'), query: { type: 'plan', package: pkg.id } }"
+          <a
+            :href="requestHref({ pakett: pkg.code }) ?? localePath('/broneeri')"
             class="mt-4 text-center text-xs font-light text-stone-500 underline underline-offset-4 hover:text-stone-800 transition-colors"
           >
             {{ $t('teenused.prePlanning.ctaAskFirst') }}
-          </NuxtLink>
+          </a>
+        </template>
+        <!-- Starts with a free introductory call; paid after it (the larger packages). -->
+        <template v-else-if="requestHref({ pakett: pkg.code })">
+          <a
+            :href="requestHref({ pakett: pkg.code })!"
+            class="mt-10 text-center text-xs tracking-[0.25em] uppercase px-6 py-4 border border-stone-800 text-stone-800 hover:bg-stone-800 hover:text-white transition-all duration-300"
+          >
+            {{ $t('teenused.prePlanning.ctaCall') }}
+          </a>
+          <p class="mt-4 text-center text-xs font-light text-stone-500">
+            {{ $t('teenused.prePlanning.ctaCallNote') }}
+          </p>
         </template>
         <NuxtLink
           v-else
@@ -85,6 +98,6 @@
 // (useCatalogue); only the section's own headings live in the locales.
 const { tm } = useI18n()
 const localePath = useLocalePath()
-const { packages, checkoutHref } = useCatalogue()
+const { packages, checkoutHref, requestHref } = useCatalogue()
 const sharedNotes = computed(() => tm('teenused.prePlanning.notes') as string[])
 </script>

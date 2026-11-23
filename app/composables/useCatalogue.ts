@@ -12,6 +12,8 @@ interface CatalogueItem {
   code: string
   priceCents: number
   requiresShipping: boolean
+  /** Bought at the checkout; otherwise it starts with a free introductory call. Absent in older feeds. */
+  orderOnline?: boolean
   name: Record<Lang, string>
   description: Record<Lang, string>
   features: Record<Lang, string[]>
@@ -35,7 +37,7 @@ export function formatPrice(cents: number, lang: Lang): string {
   return lang === 'et' ? `${value.replace('.', ',')}\u00A0€` : `€${value}`
 }
 
-interface ShopFlag { open: boolean; checkoutUrl: string | null }
+interface ShopFlag { open: boolean; checkoutUrl: string | null; requestUrl?: string | null }
 
 export function useCatalogue() {
   const { locale } = useI18n()
@@ -52,6 +54,7 @@ export function useCatalogue() {
     description: item.description[lang.value],
     list: item.features[lang.value],
     requiresShipping: item.requiresShipping,
+    orderOnline: item.orderOnline !== false,
   })
 
   const packages = computed(() => groups.pre_planning.items.map(view))
@@ -69,13 +72,31 @@ export function useCatalogue() {
   const shop = ((catalogue as { shop?: ShopFlag }).shop ?? { open: false, checkoutUrl: null }) as ShopFlag
   const shopOpen = shop.open && !!shop.checkoutUrl
 
-  /** Absolute link into the checkout with one thing preselected, or null while the shop is closed. */
+  /**
+   * Absolute link into the checkout with one thing preselected, or null while
+   * the shop is closed — or for a package that starts with a call instead.
+   */
   function checkoutHref(what: { pakett: string } | { toode: string }): string | null {
     if (!shopOpen) return null
+    if ('pakett' in what && groups.pre_planning.items.find((i) => i.code === what.pakett)?.orderOnline === false) return null
     const q = new URLSearchParams(what as Record<string, string>)
     if (lang.value === 'en') q.set('lang', 'en')
     return `${shop.checkoutUrl}?${q.toString()}`
   }
 
-  return { packages, shopItems, fromPrice, lang, shopOpen, checkoutHref }
+  // The portal's "book a free introductory call" form (owner, 2026-11-23): the
+  // larger packages and ceremonies start with a conversation. Needs no payment
+  // setup, so it is offered whenever the portal says where it is.
+  const requestUrl = shop.requestUrl ?? null
+
+  /** Absolute link to the portal's request form, or null if the feed names none. */
+  function requestHref(what: { pakett?: string; teema?: 'tseremoonia' } = {}): string | null {
+    if (!requestUrl) return null
+    const q = new URLSearchParams(Object.entries(what).filter(([, v]) => v) as [string, string][])
+    if (lang.value === 'en') q.set('lang', 'en')
+    const qs = q.toString()
+    return qs ? `${requestUrl}?${qs}` : requestUrl
+  }
+
+  return { packages, shopItems, fromPrice, lang, shopOpen, checkoutHref, requestHref }
 }
